@@ -1,0 +1,11 @@
+<div>
+  <h1>Dashboard</h1>
+  <p>Welcome to the dashboard!</p>
+  <p><strong>Funds:</strong> <%= number_to_currency(current_user.funds) %></p>
+  <p><strong>Total Stocks Owned:</strong> <%= current_user.transactions.sum(:quantity) %></p>
+  <ul>
+    <li><%= link_to 'Search Stocks', search_stock_path %></li>
+    <li><%= link_to 'My Portfolio', my_portfolio_path %></li>
+    <li><%= link_to 'My Transactions', transactions_path %></li>
+  </ul>
+</div>

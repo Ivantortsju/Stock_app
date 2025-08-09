@@ -1,0 +1,32 @@
+<h1>My Portfolio</h1>
+
+<% if @stocks.any? %>
+  <table>
+    <thead>
+      <tr>
+        <th>Stock</th>
+        <th>Quantity</th>
+        <th>Current Price</th>
+        <th>Total Value</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @stocks.each do |stock| %>
+        <tr>
+          <td><%= stock.name %> (<%= stock.ticker %>)</td>
+          <td><%= stock.quantity %></td>
+          <td><%= number_to_currency(stock.last_price) %></td>
+          <td><%= number_to_currency(stock.quantity * stock.last_price) %></td>
+          <td><%= link_to 'Sell', sell_stock_path(ticker: stock.ticker) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p>You do not own any stocks yet.</p>
+<% end %>
+
+<div style="text-align: right; margin-top: 20px;">
+  <%= link_to 'Home', root_path, class: 'btn' %>
+</div>

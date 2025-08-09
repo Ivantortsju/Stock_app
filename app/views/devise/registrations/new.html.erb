@@ -1,0 +1,42 @@
+<div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#4e2a8e] via-[#6c3eb4] to-[#3e8edb]">
+  <div class="relative w-[600px] h-[420px] bg-white/30 rounded-[3.5rem] shadow-2xl flex flex-col items-center justify-between backdrop-blur-lg border border-white/30 py-0">
+    <div class="absolute -top-16 left-1/2 -translate-x-1/2 flex items-center justify-center w-32 h-32 rounded-full bg-white/70 shadow-lg border-4 border-white">
+    <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="none" viewBox="0 0 24 24" stroke="#4e2a8e" class="mx-auto"><circle cx="12" cy="8" r="4" stroke-width="2"/><path stroke-width="2" d="M4 20c0-2.21 3.582-4 8-4s8 1.79 8 4"/></svg>
+    </div>
+    <h2 class="mt-20 mb-6 text-3xl font-extrabold text-center text-gray-900 drop-shadow-lg">Sign up</h2>
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: {class: 'w-full flex flex-col items-center'}) do |f| %>
+      <%= render "devise/shared/error_messages", resource: resource %>
+      <div class="flex flex-row w-full gap-[6%] mb-3">
+  <div class="flex flex-col w-[44%]">
+    <%= f.label :name, class: 'block font-semibold text-gray-800 mb-1 text-base text-left' %>
+    <%= f.text_field :name, autofocus: true, autocomplete: "name", class: 'w-full px-8 py-3 text-base rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#6c3eb4] focus:border-[#6c3eb4] bg-white/90 text-gray-900 shadow-sm' %>
+  </div>
+  <div class="flex flex-col w-[44%]">
+    <%= f.label :surname, class: 'block font-semibold text-gray-800 mb-1 text-base text-left' %>
+    <%= f.text_field :surname, autocomplete: "surname", class: 'w-full px-8 py-3 text-base rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#6c3eb4] focus:border-[#6c3eb4] bg-white/90 text-gray-900 shadow-sm' %>
+  </div>
+</div>
+      <div class="w-full mb-3">
+        <%= f.label :email, class: 'block font-semibold text-gray-800 mb-1 text-base text-left' %>
+        <%= f.email_field :email, autocomplete: "email", class: 'w-full px-8 py-3 text-base rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#6c3eb4] focus:border-[#6c3eb4] bg-white/90 text-gray-900 shadow-sm' %>
+      </div>
+      <div class="w-full mb-3">
+        <%= f.label :password, class: 'block font-semibold text-gray-800 mb-1 text-base text-left' %>
+        <% if @minimum_password_length %>
+          <em class="text-gray-600 text-sm">(<%= @minimum_password_length %> characters minimum)</em>
+        <% end %>
+        <%= f.password_field :password, autocomplete: "new-password", class: 'w-full px-8 py-3 text-base rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#6c3eb4] focus:border-[#6c3eb4] bg-white/90 text-gray-900 shadow-sm' %>
+      </div>
+      <div class="w-full mb-3">
+        <%= f.label :password_confirmation, class: 'block font-semibold text-gray-800 mb-1 text-base text-left' %>
+        <%= f.password_field :password_confirmation, autocomplete: "new-password", class: 'w-full px-8 py-3 text-base rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#6c3eb4] focus:border-[#6c3eb4] bg-white/90 text-gray-900 shadow-sm' %>
+      </div>
+      <div class="w-[40%] mx-auto mt-4">
+        <%= f.submit "Sign Up ▶", class: 'w-full bg-[#2196f3] hover:bg-[#1769aa] text-white font-bold py-3 text-base rounded-full shadow-md transition duration-150' %>
+      </div>
+    <% end %>
+    <div class="w-full mt-2 text-center">
+      <%= render "devise/shared/links" %>
+    </div>
+  </div>
+</div>

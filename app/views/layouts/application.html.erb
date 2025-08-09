@@ -1,0 +1,35 @@
+
+  <link rel="manifest" href="/manifest.json">
+  <link rel="icon" href="/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/icon.png">
+  <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
+  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+  <%= javascript_importmap_tags %>
+
+  <!-- For collapsible sidebar (Alpine.js) -->
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+<body class="bg-[#2a3042]">
+  <div class="flex h-screen overflow-show">
+
+    <!-- Sidebar (only for admin) -->
+    <% if current_user.role == 'admin' %>
+      <%= render "layouts/sidebar" %>
+    <% end %>
+
+    <!-- Main content -->
+    <div class="flex-1 overflow-y-auto">
+      <main class="p-6">
+        <% flash.each do |type, message| %>
+          <div class="mb-4 text-sm text-yellow-700 bg-yellow-100 border border-yellow-400 rounded px-4 py-3">
+            <%= message %>
+          </div>
+        <% end %>
+
+        <%= yield %>
+      </main>
+    </div>
+
+  </div>
+  
+</body>

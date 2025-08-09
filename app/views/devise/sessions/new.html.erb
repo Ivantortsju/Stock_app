@@ -1,0 +1,31 @@
+<div class="min-h-screen flex items-center justify-center bg-cover bg-center" style="background-image: url(<%= asset_path 'login-bg.jpg' %>);">
+
+  <div class="relative w-full max-w-lg bg-white/30 rounded-[3.5rem] shadow-2xl px-8 py-10 flex flex-col items-center backdrop-blur-lg border border-white/30">
+    <div class="absolute -top-16 left-1/2 -translate-x-1/2 flex items-center justify-center w-32 h-32 rounded-full bg-white/70 shadow-lg border-4 border-white">
+      <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="none" viewBox="0 0 24 24" stroke="#4e2a8e" class="mx-auto"><circle cx="12" cy="8" r="4" stroke-width="2"/><path stroke-width="2" d="M4 20c0-2.21 3.582-4 8-4s8 1.79 8 4"/></svg>
+    </div>
+    <h2 class="mt-20 mb-8 text-3xl font-extrabold text-center text-gray-900 drop-shadow-lg">Stock Trading App</h2>
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: {class: 'w-full space-y-5'}) do |f| %>
+      <div>
+        <%= f.label :email, class: 'block font-semibold text-gray-800 mb-1' %>
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", class: 'w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#6c3eb4] focus:border-[#6c3eb4] bg-white/90 text-gray-900 shadow-sm' %>
+      </div>
+      <div>
+        <%= f.label :password, class: 'block font-semibold text-gray-800 mb-1' %>
+        <%= f.password_field :password, autocomplete: "current-password", class: 'w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#6c3eb4] focus:border-[#6c3eb4] bg-white/90 text-gray-900 shadow-sm' %>
+      </div>
+      <% if devise_mapping.rememberable? %>
+        <div class="flex items-center">
+          <%= f.check_box :remember_me, class: 'mr-2' %>
+          <%= f.label :remember_me, class: 'text-gray-700' %>
+        </div>
+      <% end %>
+      <div class="text-center">
+        <%= f.submit "LOGIN", class: 'w-full bg-[#2196f3] hover:bg-[#1769aa] text-white font-bold py-2 rounded-full shadow-md transition duration-150' %>
+      </div>
+    <% end %>
+    <div class="w-full mt-6 space-y-2 text-center">
+      <%= render "devise/shared/links" %>
+    </div>
+  </div>
+</div>

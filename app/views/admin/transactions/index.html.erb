@@ -1,0 +1,42 @@
+<h1>All Transactions</h1>
+
+<!-- Search Form -->
+<%= form_with url: admin_transactions_path, method: :get, local: true, class: 'mb-3' do |f| %>
+  <div style="margin-bottom: 1em;">
+    <%= f.label :q, 'Search:', style: 'margin-right: 0.5em;' %>
+    <%= f.text_field :q, value: params[:q], placeholder: 'Search transactions...', autofocus: true %>
+    <%= f.submit 'Search', class: 'btn btn-primary btn-sm', style: 'margin-left: 0.5em;' %>
+    <% if params[:q].present? %>
+      <%= link_to 'Clear', admin_transactions_path(sort: params[:sort], direction: params[:direction]), class: 'btn btn-secondary btn-sm', style: 'margin-left: 0.5em;' %>
+    <% end %>
+  </div>
+<% end %>
+
+
+<table>
+  <thead>
+    <tr>
+      <th><%= link_to "Trader #{sort_arrow('email')}", admin_transactions_path(q: params[:q], sort: 'email', direction: params[:sort] == 'email' && params[:direction] == 'asc' ? 'desc' : 'asc') %></th>
+      <th><%= link_to "Ticker #{sort_arrow('ticker')}", admin_transactions_path(q: params[:q], sort: 'ticker', direction: params[:sort] == 'ticker' && params[:direction] == 'asc' ? 'desc' : 'asc') %></th>
+      <th><%= link_to "Quantity #{sort_arrow('quantity')}", admin_transactions_path(q: params[:q], sort: 'quantity', direction: params[:sort] == 'quantity' && params[:direction] == 'asc' ? 'desc' : 'asc') %></th>
+      <th><%= link_to "Price Per Share #{sort_arrow('price_per_share')}", admin_transactions_path(q: params[:q], sort: 'price_per_share', direction: params[:sort] == 'price_per_share' && params[:direction] == 'asc' ? 'desc' : 'asc') %></th>
+      <th><%= link_to "Type #{sort_arrow('transaction_type')}", admin_transactions_path(q: params[:q], sort: 'transaction_type', direction: params[:sort] == 'transaction_type' && params[:direction] == 'asc' ? 'desc' : 'asc') %></th>
+      <th><%= link_to "Date #{sort_arrow('created_at')}", admin_transactions_path(q: params[:q], sort: 'created_at', direction: params[:sort] == 'created_at' && params[:direction] == 'asc' ? 'desc' : 'asc') %></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @transactions.each do |transaction| %>
+      <% row_class = transaction.transaction_type == 'buy' ? 'table-success' : 'table-danger' %>
+      <tr class="<%= row_class %>">
+        <td><%= transaction.user.email %></td>
+        <td><%= transaction.ticker %></td>
+        <td><%= transaction.quantity.abs %></td>
+        <td><%= number_to_currency(transaction.price_per_share) %></td>
+        <td><%= transaction.transaction_type.capitalize %></td>
+        <td><%= transaction.created_at.strftime("%Y-%m-%d %H:%M") %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+

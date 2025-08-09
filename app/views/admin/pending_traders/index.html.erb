@@ -1,0 +1,44 @@
+<h1>Pending Traders</h1>
+
+<%= form_with url: admin_pending_traders_path, method: :get, local: true do %>
+  <div class="form-group mb-3">
+    <%= label_tag :q, 'Search trader:' %>
+    <%= text_field_tag :q, params[:q], class: 'form-control', placeholder: 'Enter trader info' %>
+    <%= submit_tag 'Search', class: 'btn btn-primary mt-2' %>
+    <% if params[:q].present? %>
+      <%= link_to 'Clear', admin_pending_traders_path(sort: params[:sort], direction: params[:direction]), class: 'btn btn-secondary mt-2 ml-2' %>
+    <% end %>
+  </div>
+<% end %>
+
+<table>
+  <thead class="bg-gray-100">
+  <tr>
+    <% columns = { 'name' => 'Name', 'surname' => 'Surname', 'email' => 'Email' } %>
+    <% columns.each do |col, label| %>
+      <% dir = (params[:sort] == col && params[:direction] == 'asc') ? 'desc' : 'asc' %>
+      <th class="px-4 py-2 cursor-pointer <%= 'text-blue-700 underline' if params[:sort] == col %>">
+        <%= link_to label, admin_pending_traders_path(q: params[:q], sort: col, direction: dir), class: 'hover:underline' %>
+        <% if params[:sort] == col %>
+          <%= params[:direction] == 'asc' ? '▲' : '▼' %>
+        <% end %>
+      </th>
+    <% end %>
+    <th></th>
+  </tr>
+</thead>
+  <tbody>
+    <% @pending_traders.each do |trader| %>
+      <tr>
+        <td><%= trader.name %></td>
+        <td><%= trader.surname %></td>
+        <td><%= trader.email %></td>
+        <td>
+          <%= button_to 'Approve', admin_pending_trader_path(trader), method: :patch, data: { turbo_confirm: 'Are you sure you want to approve this trader?' }, class: 'btn btn-success btn-sm' %>
+          <%= button_to 'Reject', admin_pending_trader_path(trader), method: :delete, data: { turbo_confirm: 'Are you sure you want to reject this trader?' }, class: 'btn btn-danger btn-sm' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+

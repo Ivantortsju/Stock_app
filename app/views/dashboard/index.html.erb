@@ -1,0 +1,17 @@
+<% if user_signed_in? %>
+<div style="text-align: right;">
+  Logged in as <strong><%= current_user.email %></strong>.
+  <%= button_to "Log out", destroy_user_session_path, method: :delete %>
+</div>
+<% end %>
+
+<p class="notice"><%= notice %></p>
+<p class="alert"><%= alert %></p>
+
+<%= yield %>
+
+<% if current_user.role == 'admin' %>
+  <%= render 'admin_dashboard' %>
+<% else %>
+  <%= render 'trader_dashboard' %>
+<% end %>

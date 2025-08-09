@@ -1,0 +1,35 @@
+<h1>My Transactions</h1>
+
+<% if @transactions.any? %>
+  <table>
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Ticker</th>
+        <th>Type</th>
+        <th>Quantity</th>
+        <th>Price Per Share</th>
+        <th>Total Amount</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @transactions.each do |transaction| %>
+        <% row_class = transaction.transaction_type == 'buy' ? 'table-success' : 'table-danger' %>
+        <tr class="<%= row_class %>">
+          <td><%= transaction.created_at.strftime('%Y-%m-%d %H:%M') %></td>
+          <td><%= transaction.ticker %></td>
+          <td><%= transaction.transaction_type.capitalize %></td>
+          <td><%= transaction.quantity.abs %></td>
+          <td><%= number_to_currency(transaction.price_per_share) %></td>
+          <td><%= number_to_currency(transaction.quantity.abs * transaction.price_per_share) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p>You have no transactions yet.</p>
+<% end %>
+
+<div style="text-align: right; margin-top: 20px;">
+  <%= link_to 'Home', root_path, class: 'btn' %>
+</div>

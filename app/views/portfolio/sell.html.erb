@@ -1,0 +1,20 @@
+<h1>Sell Stock</h1>
+
+<h2><%= @stock.name %> (<%= @stock.ticker %>)</h2>
+<p><strong>Current Price:</strong> <%= number_to_currency(@stock.last_price) %></p>
+<p><strong>Shares Owned:</strong> <%= @owned_shares %></p>
+
+<%= form_with url: '/sell_stock', method: :post, local: true do |form| %>
+  <%= form.hidden_field :ticker, value: @stock.ticker %>
+  <div class="form-group">
+    <%= form.label :quantity, 'Quantity to Sell' %>
+    <%= form.number_field :quantity, class: 'form-control', min: 1, max: @owned_shares, required: true %>
+  </div>
+  <%= form.submit 'Confirm Sell', class: 'btn btn-danger', data: { turbo_confirm: 'Are you sure you want to sell these shares?' } %>
+<% end %>
+
+<div style="text-align: right; margin-top: 20px;">
+  <button onclick="window.history.back();">Return</button>
+</div>
+
+<%= link_to 'Back to Portfolio', my_portfolio_path, class: 'btn btn-secondary mt-3' %>
